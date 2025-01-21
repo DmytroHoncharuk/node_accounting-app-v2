@@ -1,5 +1,5 @@
 const { expensesService } = require('./../services/expenses.service');
-const { expenseService } = require('../services/expenses.service');
+const { userService } = require('../services/users.service');
 
 const getAllExpenses = (req, res) => {
   const { userId, categories, from, to } = req.query;
@@ -18,8 +18,6 @@ const getAllExpenses = (req, res) => {
 
   res.status(200).json(expenses);
 };
-
-module.exports = { getAllExpenses };
 
 const getExpense = (req, res) => {
   const id = parseInt(req.params.id, 10);
@@ -44,11 +42,13 @@ const getExpense = (req, res) => {
 const createExpense = (req, res) => {
   const { userId, spentAt, title, amount, category, note } = req.query;
 
-  if (!userId || !spentAt || !title || !amount || !category) {
+  const user = userService.getById(userId);
+
+  if (!user || !spentAt || !title || !amount || !category) {
     res.status(400).json({ message: 'All parameters are required' });
   }
 
-  const newExpense = expenseService.create(
+  const newExpense = expensesService.create(
     userId,
     spentAt,
     title,
@@ -119,14 +119,14 @@ const deleteExpense = (req, res) => {
     return;
   }
 
-  const expense = expenseService.getById(id);
+  const expense = expensesService.getById(id);
 
   if (!expense) {
     res.status(404).json({ message: 'Expense not found' });
 
     return;
   }
-  expenseService.remove(id);
+  expensesService.remove(id);
 
   res.status(204).send();
 };

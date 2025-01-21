@@ -58,7 +58,7 @@ function update(id, updates) {
   Object.assign(expense, updates);
 }
 
-const expenseService = {
+const expensesService = {
   getAll,
   getById,
   create,
@@ -67,5 +67,5 @@ const expenseService = {
 };
 
 module.exports = {
-  expenseService,
+  expensesService,
 };

@@ -3,7 +3,7 @@ const expensesController = require('../controllers/expenses.controller');
 
 const router = express.Router();
 
-router.get('/', expensesController.getExpense);
+router.get('/', expensesController.getAllExpenses);
 router.get('/:id', expensesController.getExpense);
 router.put('/', expensesController.createExpense);
 router.delete('/:id', expensesController.deleteExpense);
