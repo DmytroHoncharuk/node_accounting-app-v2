@@ -1,5 +1,9 @@
 let Expenses = [];
 
+function clearAllExpenses() {
+  Expenses = [];
+}
+
 function getAll(userId, categories, from, to) {
   return Expenses.filter((expense) => {
     if (userId && userId !== expense.userId) {
@@ -9,7 +13,7 @@ function getAll(userId, categories, from, to) {
     if (
       categories &&
       categories.length > 0 &&
-      !categories.includes(expense.categories)
+      !categories.includes(expense.category)
     ) {
       return false;
     }
@@ -29,7 +33,7 @@ function getAll(userId, categories, from, to) {
 }
 
 function getById(id) {
-  return Expenses.filter((expense) => expense.id === id);
+  return Expenses.find((expense) => expense.id === +id);
 }
 
 function create(userId, spentAt, title, amount, category, note) {
@@ -52,10 +56,30 @@ function remove(id) {
   Expenses = Expenses.filter((expense) => expense.id !== id);
 }
 
-function update(id, updates) {
-  const expense = getById(id);
+function update({ id, spentAt, title, amount, category, note }) {
+  const expenseToUpdate = getById(id);
 
-  Object.assign(expense, updates);
+  if (spentAt) {
+    expenseToUpdate.spentAt = spentAt;
+  }
+
+  if (title) {
+    expenseToUpdate.title = title;
+  }
+
+  if (amount) {
+    expenseToUpdate.amount = amount;
+  }
+
+  if (category) {
+    expenseToUpdate.category = category;
+  }
+
+  if (note) {
+    expenseToUpdate.note = note;
+  }
+
+  return expenseToUpdate;
 }
 
 const expensesService = {
@@ -68,4 +92,5 @@ const expensesService = {
 
 module.exports = {
   expensesService,
+  clearAllExpenses,
 };

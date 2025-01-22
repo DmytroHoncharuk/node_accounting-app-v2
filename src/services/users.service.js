@@ -1,5 +1,9 @@
 let Users = [];
 
+function clearAllUsers() {
+  Users = [];
+}
+
 function getAll() {
   return Users;
 }
@@ -39,4 +43,5 @@ const userService = {
 
 module.exports = {
   userService,
+  clearAllUsers,
 };
