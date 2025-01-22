@@ -40,7 +40,7 @@ const getExpense = (req, res) => {
 };
 
 const createExpense = (req, res) => {
-  const { userId, spentAt, title, amount, category, note } = req.query;
+  const { userId, spentAt, title, amount, category, note } = req.body;
 
   const user = userService.getById(userId);
 
